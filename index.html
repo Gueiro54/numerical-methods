@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos Numéricos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>MÉTODOS NUMÉRICOS</h1>
+    </header>
+    <section>
+        <div id="seletor">
+            <ul>
+                <li>Newton-Raphson</li>
+                <li>Raiz de Matrizes</li>
+            </ul>
+        </div>
+        <div id="newton-raphson">
+            <div class="main">
+                <div class="function">
+                    <p>Coloque sua função que encontrarei sua raiz (f(x) = 0)</p>
+                    <p id="obs">É possível encontrar qualquer raiz de função de terceiro grau
+                        <br>Siga o formato "f(x) = ax^^3 + bx^^2 + cx + d"
+                    </p>
+                    <p><input id="functionNR" type="text"></p>
+                </div>
+                <div class="guess">
+                    <p>Chute inicial</p>
+                    <p id="obs">Caso não seja inserido nenhum valor <br> será tomado 0 como padrão</p>
+                    <p><input id="inp1NR" type="number"></p>
+                </div>
+            </div>
+            <div class="results">
+                <p><input type="button" value="Iniciar" onclick="calculaNR()"></p>
+                <p id="resFinal">O resultado aparecerá aqui</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div id="left">Gustavo Pinto</div>
+        <div id="right">
+            <p>2023</p>
+            <p><a href="https://github.com/Gueiro54"><img id="github-icon" src="Imagens/github.png" alt="Ícone do Github"></a></p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

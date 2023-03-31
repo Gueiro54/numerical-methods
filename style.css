@@ -1,0 +1,98 @@
+html{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font: 100% Perpetua, sans-serif;
+}
+body{
+    background-color: aliceblue;
+    overflow-wrap: break-word;
+}
+section{
+    font-size: 1.15em;
+    box-sizing: border-box;
+    display: block;
+}
+li{
+    display: flex;
+    padding-inline: 10px;
+    justify-content: space-between;
+}
+#newton-raphson{
+    border-radius: 10px;
+    padding: 15px;
+    background-color: rgb(250, 255, 255);
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+.main{
+    display: flex;
+    justify-content: space-evenly;
+}
+.function, .guess{
+    display: inline-block;
+    padding-inline: 15px;
+}
+.function{
+
+}
+.guess{
+    position: relative;
+}
+.guess input{
+    width: 50px;
+}
+#obs {
+    color: red;
+    font-size: 0.75em;
+}
+.results{
+
+}
+footer{
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 1.1em;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(250, 255, 255);
+}
+footer div{
+    display: inline-block;
+}
+#left{
+    align-items: center;
+    padding-left: 10px;
+    display: flex;
+}
+#right{
+    right: 0;
+    padding-right: 10px;
+    background-color: yellowgreen;
+}
+#right p{
+    display: inline-block;
+    align-items: center;
+}
+#github-icon{
+    width: 12%;
+    border-radius: 50%;
+    margin-left: 1.2em;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
