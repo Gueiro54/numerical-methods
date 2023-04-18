@@ -14,23 +14,43 @@ section{
     font-size: 1.15em;
     box-sizing: border-box;
     display: block;
+    margin-bottom: 0%;
 }
-li{
-    display: flex;
-    padding-inline: 10px;
+#selector{
+    text-align: center;
+    margin-inline: 2px;
+    position: relative;
+}
+#selector li{
+    display: inline;
+    padding-inline: 12px;
+    margin-inline: 2px;
     justify-content: space-between;
+    background-color: rgb(250, 255, 255);
+    border-top-right-radius: 10%;
+    border-top-left-radius: 10%;
 }
-#newton-raphson{
+.method{
     border-radius: 10px;
     padding: 15px;
     background-color: rgb(250, 255, 255);
     width: 80%;
     margin: auto;
-    text-align: center;
+    margin: 0%;
+    /*position: absolute;
+    top: 100px;*/
+    left: 10%;
+}
+#newton-raphson{
+    visibility: visible;
+}
+#matrix-nr{
+    visibility: visible;
 }
 .main{
     display: flex;
     justify-content: space-evenly;
+    text-align: center;
 }
 .function, .guess{
     display: inline-block;
@@ -41,16 +61,25 @@ li{
 }
 .guess{
     position: relative;
+    text-align: center;
+}
+.desc{
+    font-size: .75em;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 15px;
 }
 .guess input{
     width: 50px;
+    margin: 0%;
 }
-#obs {
+.obs {
     color: red;
     font-size: 0.75em;
 }
 .results{
-
+    text-align: center;
 }
 footer{
     display: flex;
@@ -74,7 +103,6 @@ footer div{
 #right{
     right: 0;
     padding-right: 10px;
-    background-color: yellowgreen;
 }
 #right p{
     display: inline-block;
