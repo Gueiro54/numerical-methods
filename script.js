@@ -1,18 +1,13 @@
-const mathjs = require("mathjs")
-document.querySelector("#switchNR").addEventListener("click", visibilitySwitch(1));
-document.querySelector("#switchMNR").addEventListener("click", visibilitySwitch(2));
-const visibilitySwitch = function (prop){
-    const newtonRaphson = window.document.querySelector('#newton-raphson')
-    const matrixNR = window.document.querySelector('#matrix-nr')
+document.querySelector("#switchNR").addEventListener("click", visibilitySwitch1)
+document.querySelector("#switchMNR").addEventListener("click", visibilitySwitch2)
 
-    if(prop = 1){
-        newtonRaphson.style.visibility("visible")
-        matrixNR.style.visibility("hidden")
-    }
-    if(prop = 2){
-        newtonRaphson.style.visibility("hidden")
-        matrixNR.style.visibility("visible")
-    }
+function visibilitySwitch1 (){
+    document.querySelector('#newtonraphson').style.visibility = "visible"
+    document.querySelector('#matrixnr').style.visibility = "hidden"
+}
+function visibilitySwitch2 (){
+    document.querySelector('#newtonraphson').style.visibility = 'hidden'
+    document.querySelector('#matrixnr').style.visibility = 'visible'
 }
 const derivative = function (foo, x){
     const h = 0.001
@@ -64,7 +59,6 @@ const functionFormat = function (string){
     return stringFunction
 }
 const calculaNR = function () {
-    //let rawFunctionNR = "f(x) = x^^2 + x - 5"
     let rawFunctionNR = window.document.querySelector("input#functionNR").value
     //Obtem a função
 
@@ -126,15 +120,23 @@ const calculaNR = function () {
     }
     const guessInp = window.document.querySelector("input#inp1NR")
     let guess = Number(guessInp.value)
-    if(guess===NaN|guess===null){
-        guess = 0
+    if(guess==NaN|guess==null){
+        guess = 1
     }
     //Caso o valor do input não for
 
     newtonRaphson(guess)
     //Declaração da função com o valor do chute 
 }
-const partialDerivativeX = function (foo, x, y, z){
+const partialDerivativeX2 = function (foo, x, y){
+    //foo = função que vai ser derivada nos pontos x e y
+    const h = 0.0001
+
+    const f = new Function("x, y, z", "return " + foo)
+
+    return (f(x+h, y) - f(x-h, y))/(2*h)
+}
+const partialDerivativeX3 = function (foo, x, y, z){
     //foo = função que vai ser derivada nos pontos x e y
     const h = 0.0001
 
@@ -142,7 +144,15 @@ const partialDerivativeX = function (foo, x, y, z){
 
     return (f(x+h, y, z) - f(x-h, y, z))/(2*h)
 }
-const partialDerivativeY = function (foo, x, y, z){
+const partialDerivativeY2 = function (foo, x, y){
+    //foo = função que vai ser derivada nos pontos x e y
+    const h = 0.0001
+
+    const f = new Function("x, y, z", "return " + foo)
+
+    return (f(x, y+h) - f(x, y-h))/(2*h)
+}
+const partialDerivativeY3 = function (foo, x, y, z){
     //foo = função que vai ser derivada nos pontos x e y
     const h = 0.0001
 
@@ -150,7 +160,7 @@ const partialDerivativeY = function (foo, x, y, z){
 
     return (f(x, y+h, z) - f(x, y-h, z))/(2*h)
 }
-const partialDerivativeZ = function (foo, x, y, z){
+const partialDerivativeZ3 = function (foo, x, y, z){
     //foo = função que vai ser derivada nos pontos x,y e z
     const h = 0.0001
 
@@ -161,55 +171,81 @@ const partialDerivativeZ = function (foo, x, y, z){
 const jacobianMatrix = function (fc1, fc2, x, y, fc3, z){
     // Matriz jacobiana - Essa é a derivada parcial de cada uma das icognitas (colunas) em cada uma das funções (linhas)
     // O codigo só suporta o formato de matriz 3x3
-    if(z == undefined & fc3 == undefined){
-        let res = [[partialDerivativeX(fc1, x, y), partialDerivativeY(fc1, x, y)],
-[partialDerivativeX(fc2, x, y), partialDerivativeY(fc2, x, y)]]
+    if(fc3 == undefined){
+        let rm = [[partialDerivativeX2(fc1, x, y), partialDerivativeY2(fc1, x, y)],
+        [partialDerivativeX2(fc2, x, y), partialDerivativeY2(fc2, x, y)]]
+
+        return rm
     }
     else{
-        let res = [[partialDerivativeX(fc1, x, y, z), partialDerivativeY(fc1, x, y, z), partialDerivativeZ(fc1, x, y, z)],
-        [partialDerivativeX(fc2, x, y, z), partialDerivativeY(fc2, x, y, z), partialDerivativeZ(fc2, x, y, z)],
-        [partialDerivativeX(fc3, x, y, z), partialDerivativeY(fc3, x, y, z), partialDerivativeZ(fc3, x, y, z)]]
+        let rm = [[partialDerivativeX3(fc1, x, y, z), partialDerivativeY3(fc1, x, y, z), partialDerivativeZ3(fc1, x, y, z)],
+        [partialDerivativeX3(fc2, x, y, z), partialDerivativeY3(fc2, x, y, z), partialDerivativeZ3(fc2, x, y, z)],
+        [partialDerivativeX3(fc3, x, y, z), partialDerivativeY3(fc3, x, y, z), partialDerivativeZ3(fc3, x, y, z)]]
+
+        return rm
     }
     // Precisa de uma função para definir o tamanho da matriz a partir do numero de ic e fc
-
-    // Retorna o valor da matriz jacobiana
-    return res
 }
 const calculaMatrixNR = function (){
     //Declaração de iteração
     let i = 0
-    
-    const rawfc1 = "f(x) = x²-cos(x*y)-1"
-    const rawfc2 = "f(x) = sin(y)-2*cos(x)"
-
-    let xi = 1
-    let yi = 1
 
     //Declaração de função 
-    /*const rawfc1 = window.document.querySelector("input#functionNR1")
-    const rawfc2 = window.document.querySelector("input#functionNR2")
-    const rawfc3 = window.document.querySelector("input#functionNR3")
+    const rawfc1 = window.document.querySelector("#functionNR1").value
+    const rawfc2 = window.document.querySelector("#functionNR2").value
+    let rawfc3 = window.document.querySelector("#functionNR3").value
+    
+    //alerta para inserir uma função
+    if(rawfc1 == ""||rawfc2 == ""){
+        window.alert("Insira algo no campo de função")
+    }
 
     //Declaração de icognita e condicional
-    let xi = window.document.querySelector("input#inpNR1")
-    let yi = window.document.querySelector("input#inpNR2")
-    let zi = window.document.querySelector("input#inpNR3")*/
+    let x = window.document.querySelector("#inpNR1")
+    let xi = Number(x.value)
+    let y = window.document.querySelector("#inpNR2")
+    let yi = Number(y.value)
+    let z = window.document.querySelector("#inpNR3")
+    let zi = Number(z.value)
 
+    //Formatação da icognita
     const iFormat = function (x) {
-        if(x == NaN | x == undefined){
-            x = 0
+        if(x == NaN | x == undefined | x == ""){
+            x = 1
         }
         return x
     }
 
     xi = iFormat(xi)
     yi = iFormat(yi)
+    
+    if(rawfc3 == undefined){
+        zi = undefined
+    }
+    else{
+        if(zi == undefined | zi == NaN){
+            zi = undefined
+        }
+        else{
+            zi = iFormat(zi)
+        }
+    }
 
     //Formatação da função
-    const fc1 = functionFormat(rawfc1)
-    const fc2 = functionFormat(rawfc2)
+    if(rawfc3 == ''){
+        rawfc3 = undefined
+    }
 
-    const newtonRaphson2 = function (fc1, fc2, x, y){
+    let fc1 = functionFormat(rawfc1)
+    let fc2 = functionFormat(rawfc2)
+    if(rawfc3 != undefined){
+        let fc3 = functionFormat(rawfc3)
+    }
+    else{
+        let fc3 = undefined
+    }
+
+    const newtonRaphson2 = function (fc1, fc2, x, y, fc3, z){
         // xk+1 = xk - J(Jacobiana Inversa) x F(xk)
         /* Esse método tem como objetivo encontrar a raiz de matrizes, 
         onde é possivel observar funções de mais de um variavel e estimar estas para que 
@@ -220,7 +256,7 @@ const calculaMatrixNR = function (){
         const deltaN = -0.0001
 
         //links primordiais
-        const resNR = document.querySelector("p#resFinalNR")
+        const resNR = document.querySelector("#resFinalNR")
     
         //resultado da funções (criação de função a partir da string da função)
         const calculaF1 = new Function("x, y", "return " + fc1)
@@ -230,8 +266,8 @@ const calculaMatrixNR = function (){
         let res2 = calculaF2(x, y)
     
         //calculo da matriz jacobiana e sua inversão
-        let jacobian = jacobianMatrix(fc1, fc2, x, y)
-        let invJacobian = mathjs.inv(jacobian)
+        let jacobian = jacobianMatrix(fc1, fc2, x, y, fc3, z)
+        let invJacobian = math.inv(jacobian)
     
         //matrix de funções (F(xk))
         matrixF = [res1, res2]
@@ -240,33 +276,33 @@ const calculaMatrixNR = function (){
             //Caso dos resultados não conseguirem ser numericos
     
             resNR.innerHTML = "Função inválida"
-            
         }
         else{
             if((res1<=deltaP & res1>=deltaN) & (res2<=deltaP & res2>=deltaN)){
+                x = x.toFixed(6)
+                y = y.toFixed(6)
+
                 resNR.innerHTML = `Os valores da raiz de ${rawfc1} e ${rawfc2} são de x = ${x} e y = ${y}, obtidos na iteração ${i}`
             }
             else{
-                if(i>=100){
-                    resNR.innerHTML =`O método ultrapassou 100 iterações`
+                if(i>=500){
+                    resNR.innerHTML = `O método ultrapassou 500 iterações`
                 }
                 else{
                     //soma da iteração
                     i++
     
                     //obter a multiplicação das matrizes
-                    let mult = mathjs.multiply(invJacobian, matrixF)
+                    let mult = math.multiply(invJacobian, matrixF)
     
                     let xk1 = x - mult[0]
                     let yk1 = y - mult[1]
+                    let zk1 
     
-                    newtonRaphson2(fc1, fc2, xk1, yk1)
+                    newtonRaphson2(fc1, fc2, xk1, yk1, fc3, zk1)
                 }
             }
         }
     }
     newtonRaphson2(fc1, fc2, xi, yi)
 }
-
-const obj = window.document.querySelector("#resFinalNR")
-obj.innerHTML = "oi"

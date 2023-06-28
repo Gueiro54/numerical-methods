@@ -29,6 +29,7 @@ section{
     background-color: rgb(250, 255, 255);
     border-top-right-radius: 10%;
     border-top-left-radius: 10%;
+    cursor: pointer;
 }
 .method{
     border-radius: 10px;
@@ -41,10 +42,10 @@ section{
     top: 100px;
     left: 10%;
 }
-#newton-raphson{
+#newtonraphson{
     visibility: visible;
 }
-#matrix-nr{
+#matrixnr{
     visibility: visible;
 }
 .main{

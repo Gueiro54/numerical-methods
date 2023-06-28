@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Métodos Numéricos</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/mathjs@11.8.2/lib/browser/math.js"></script>
 </head>
 <body>
     <header>
@@ -18,7 +19,7 @@
                 <li id="switchMNR">Raiz de Matrizes</li>
             </ul>
         </div>
-        <div id="newton-raphson" class="method">
+        <div id="newtonraphson" class="method">
             <div class="main">
                 <div class="function">
                     <p>Coloque sua função que encontrarei sua raiz (f(x) = 0)</p>
@@ -29,7 +30,7 @@
                 </div>
                 <div class="guess">
                     <p>Chute inicial</p>
-                    <p class="obs">Caso não seja inserido nenhum valor <br> será tomado 0 como padrão</p>
+                    <p class="obs">Caso não seja inserido nenhum valor <br> será tomado 1 como padrão</p>
                     <p><input id="inp1NR" type="number"></p>
                 </div>
             </div>
@@ -38,11 +39,11 @@
                 <p id="resFinal">O resultado aparecerá aqui</p>
             </div>
         </div>
-        <div id="matrix-nr" class="method">
+        <div id="matrixnr" class="method">
             <div class="main">
                 <div class="function">
                     <p>Coloque duas (duas variáveis) ou três (três variáveis) funções para achar as raízes para as 3 funções:</p>
-                    <p class="obs">Lembre-se do formato f(x) = a * x + b * y + c * z + d<br>Mas as icognitas podem estar potenciadas</p>
+                    <p class="obs">Lembre-se do formato f(x) = a * x + b * y + c * z + d<br>As icognitas podem estar potenciadas</p>
                     <p><input id="functionNR1" type="text"></p>
                     <p><input id="functionNR2" type="text"></p>
                     <p class="desc">Opcional</p>

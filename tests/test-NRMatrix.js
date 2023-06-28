@@ -1,3 +1,5 @@
+//Documento NR2 vesão Node.js
+
 const mathjs = require("mathjs")
 const partialDerivativeX = function (foo, x, y, z){
     //foo = função que vai ser derivada nos pontos x e y
@@ -23,11 +25,12 @@ const partialDerivativeZ = function (foo, x, y, z){
 
     return (f(x, y, z+h) - f(x, y, z-h))/(2*h)
 }
-const jacobianMatrix = function (fc1, fc2, x, y){
+const jacobianMatrix = function (fc1, fc2, x, y, fc3, z){
     // Matriz jacobiana
     // Essa é a derivada parcial de cada uma das icognitas
-    let res = [[partialDerivativeX(fc1, x, y), partialDerivativeY(fc1, x, y)],
-[partialDerivativeX(fc2, x, y), partialDerivativeY(fc2, x, y)]]
+    let res = [[partialDerivativeX(fc1, x, y, z), partialDerivativeY(fc1, x, y, z), partialDerivativeZ(fc1, x, y, z)],
+[partialDerivativeX(fc2, x, y, z), partialDerivativeY(fc2, x, y, z), partialDerivativeZ(fc2, x, y, z)], 
+[partialDerivativeX(fc3, x, y, z), partialDerivativeY(fc3, x, y, z), partialDerivativeZ(fc3, x, y, z)]]
     // Precisa de uma função para definir o tamanho da matriz a partir do numero de ic e fc
 
     // Retorna o valor da matriz jacobiana
@@ -75,18 +78,17 @@ const functionFormat = function (string){
 
     return stringFunction
 }
-
 const calculaNR2 = function (){
     //Declaração de iteração
     let i = 0
     
-    const rawfc1 = "f(x) = x²-cos(x*y)-1"
-    const rawfc2 = "f(x) = sin(y)-2*cos(x)"
-    const rawfc3 = ""
+    const rawfc1 = "f(x, y, z) = y³ * x² * z"
+    const rawfc2 = "f(x, y, z) = 2 * y² * z² - y³"
+    const rawfc3 = "f(x, y, z) = z³ * x * y² * x² - 62 * x - y³"
 
     let xi = 1
     let yi = 1
-    let zi
+    let zi = 1
     //Declaração de função 
     /*const rawfc1 = window.document.querySelector("input#functionNR1")
     const rawfc2 = window.document.querySelector("input#functionNR2")
@@ -111,46 +113,47 @@ const calculaNR2 = function (){
     //Formatação da função
     const fc1 = functionFormat(rawfc1)
     const fc2 = functionFormat(rawfc2)
+    const fc3 = functionFormat(rawfc3)
+    
 
-    if(rawfc3 != ""){
-        const fc3 = functionFormat(rawfc3)
-    }
-
-    const newtonRaphson2 = function (fc1, fc2, x, y){
+    const newtonRaphson2 = function (fc1, fc2, x, y, fc3, z){
         // xk+1 = xk - J(Jacobiana Inversa) x F(xk)
         /* Esse método tem como objetivo encontrar a raiz de matrizes, 
         onde é possivel observar funções de mais de um variavel e estimar estas para que 
         o total de TODAS funções dêem zero */
     
         //delta é o erro permitido para o método analítico
-        const deltaP = 0.0001
-        const deltaN = -0.0001
+        const deltaP = 0.0000000000001
+        const deltaN = -0.0000000000001
     
         //resultado da funções (criação de função a partir da string da função)
-        const calculaF1 = new Function("x, y", "return " + fc1)
-        const calculaF2 = new Function("x, y", "return " + fc2)
+        const calculaF1 = new Function("x, y, z", "return " + fc1)
+        const calculaF2 = new Function("x, y, z", "return " + fc2)
+        const calculaF3 = new Function("x, y, z", "return " + fc3)
     
-        let res1 = calculaF1(x, y)
-        let res2 = calculaF2(x, y)
+    
+        let res1 = calculaF1(x, y, z)
+        let res2 = calculaF2(x, y, z)
+        let res3 = calculaF3(x, y, z)
     
         //calculo da matriz jacobiana e sua inversão
-        let jacobian = jacobianMatrix(fc1, fc2, x, y)
+        let jacobian = jacobianMatrix(fc1, fc2, x, y, fc3, z)
         let invJacobian = mathjs.inv(jacobian)
     
         //matrix de funções (F(xk))
-        matrixF = [res1, res2]
+        matrixF = [res1, res2, res3]
     
         if(res1 == NaN | res1 == null | res2 == NaN | res2 == null){
             //Caso dos resultados não conseguirem ser numericos
             console.log("Função inválida")
         }
         else{
-            if((res1<=deltaP & res1>=deltaN) & (res2<=deltaP & res2>=deltaN)){
-                console.log(`Os valores da raiz de ${rawfc1} e ${rawfc2} são de x = ${x} e y = ${y}, obtidos na iteração ${i}`)
+            if((res1<=deltaP & res1>=deltaN) & (res2<=deltaP & res2>=deltaN) & (res3<=deltaP & res3>=deltaN)){
+                console.log(`Os valores da raiz de ${rawfc1}, ${rawfc2} e ${rawfc3} são de x = ${x}, y = ${y} e z = ${z}, obtidos na iteração ${i}`)
             }
             else{
-                if(i>=100){
-                    console.log(`O método ultrapassou 100 iterações`)
+                if(i>=2000){
+                    console.log(`O método ultrapassou 2000 iterações`)
                 }
                 else{
                     //soma da iteração
@@ -161,13 +164,14 @@ const calculaNR2 = function (){
     
                     let xk1 = x - mult[0]
                     let yk1 = y - mult[1]
+                    let zk1 = z - mult[2]
     
-                    newtonRaphson2(fc1, fc2, xk1, yk1)
+                    newtonRaphson2(fc1, fc2, xk1, yk1, fc3, zk1)
                 }
             }
         }
     }
-    newtonRaphson2(fc1, fc2, xi, yi)
+    newtonRaphson2(fc1, fc2, xi, yi, fc3, zi)
 }
 
 calculaNR2()

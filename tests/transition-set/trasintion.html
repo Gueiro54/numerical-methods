@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos Numéricos</title>
+    <link rel="stylesheet" href="trasition.css">
+</head>
+<body>
+    <header>
+        <h1>MÉTODOS NUMÉRICOS</h1>
+    </header>
+    <section>
+        <div id="selector">
+            <ul>
+                <li id="switchNR">Newton-Raphson</li>
+                <li id="switchMNR">Raiz de Matrizes</li>
+            </ul>
+        </div>
+        <div id="newton-raphson" class="method">
+            <div class="main">
+                <div class="function">
+                    <p>Coloque sua função que encontrarei sua raiz (f(x) = 0)</p>
+                    <p id="obs">É possível encontrar qualquer raiz de função de terceiro grau
+                        <br>Siga o formato "f(x) = a * x^^3 + b * x^^2 + c * x + d"
+                    </p>
+                    <p><input id="functionNR" type="text"></p>
+                </div>
+                <div class="guess">
+                    <p>Chute inicial</p>
+                    <p class="obs">Caso não seja inserido nenhum valor <br> será tomado 0 como padrão</p>
+                    <p><input id="inp1NR" type="number"></p>
+                </div>
+            </div>
+            <div class="results">
+                <p><input type="button" value="Iniciar" onclick="calculaNR();"></p>
+                <p id="resFinal">O resultado aparecerá aqui</p>
+            </div>
+        </div>
+        <div id="matrix-nr" class="method">
+            <div class="main">
+                <div class="function">
+                    <p>Coloque duas (duas variáveis) ou três (três variáveis) funções para achar as raízes para as 3 funções:</p>
+                    <p class="obs">Lembre-se do formato f(x) = a * x + b * y + c * z + d<br>Mas as icognitas podem estar potenciadas</p>
+                    <p><input id="functionNR1" type="text"></p>
+                    <p><input id="functionNR2" type="text"></p>
+                    <p class="desc">Opcional</p>
+                    <p><input id="functionNR3" type="text"></p>
+
+                </div>
+                <div class="guess">
+                    <p>Chute inicial</p>
+                    <p class="obs">Insira um ponto de 2 dimensões ou 3 dimensões</p>
+                    <p class="desc">x</p>
+                    <p><input id="inpNR1" type="number"></p>
+                    <p class="desc">y</p>
+                    <p><input id="inpNR2" type="number"></p>
+                    <p class="desc">z (Opcional)</p>
+                    <p><input id="inpNR3" type="number"></p>
+                </div>
+            </div>
+            <div class="results">
+                <p><input type="button" value="Iniciar" onclick="calculaMatrixNR();"></p>
+                <p id="resFinalNR">O resultado aparecerá aqui</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div id="left">Gustavo Pinto</div>
+        <div id="right">
+            <p>2023</p>
+            <p><a href="https://github.com/Gueiro54"><img id="github-icon" src="Imagens/github.png" alt="Ícone do Github"></a></p>
+        </div>
+    </footer>
+    <script src="transition.js"></script>
+</body>
+</html>

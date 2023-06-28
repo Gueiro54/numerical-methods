@@ -1,2 +1,0 @@
-f(x,y) = cos(x) - x * y + 1
-f(x,y) = sin(y) - cos(x)
